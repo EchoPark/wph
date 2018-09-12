@@ -1,0 +1,61 @@
+<style lang="less">
+  page {
+    height: 100%;
+  }
+  .avatar {
+    display: block;
+    margin: 100rpx auto 0;
+    width: 200rpx;
+    height: 200rpx;
+    border: 0;
+    border-radius: 100%;
+    background-color: #f8f8f8;
+  }
+  .user-name {
+    display: block;
+    margin-top: 50rpx;
+    font-size: 18px;
+    text-align: center;
+  }
+</style>
+<template>
+  <view style="height: 100%; background: #efefef; overflow: hidden;">
+    <view style="margin-bottom: 20rpx;">
+      <image class="avatar" />
+      <text class="user-name">我是头像我是头像</text>
+    </view>
+    <view style="margin-top: 10rpx;">
+      <i-cell-group>
+        <i-cell title="昵称" value="我是名字"></i-cell>
+        <i-cell title="性别" value="男"></i-cell>
+        <i-cell title="手机号码" value="1222222222" is-link></i-cell>
+      </i-cell-group>
+    </view>
+    <view style="margin-top: 10rpx;">
+      <i-cell-group>
+        <i-cell title="积分" value="100" is-link></i-cell>
+        <i-cell title="联系客服" is-link></i-cell>
+      </i-cell-group>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Me extends wepy.page {
+    config = {
+      navigationBarTitleText: '首页',
+      usingComponents: {
+        'i-cell-group': '../ui/cell-group/index',
+        'i-cell': '../ui/cell/index'
+      }
+    }
+
+    methods = {
+      handleChangeScroll ({ detail }) {
+        this.current_scroll = detail.key
+      }
+    }
+  }
+</script>

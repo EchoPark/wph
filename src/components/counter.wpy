@@ -1,0 +1,82 @@
+<style lang="less">
+  .counter {
+    text-align: left;
+    font-size: 12px;
+  }
+  .count {
+    font-size: 18px;
+    font-weight: bold;
+    &.red {
+      color: red;
+    }
+    &.green {
+      color: green;
+    }
+  }
+</style>
+<template>
+  <view>
+    <swiper
+      autoplay=true
+      indicator-dots=true
+    >
+      <block>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+      </block>
+    <swiper/>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Slider extends wepy.component {
+    props = {
+      num: {
+        type: [Number, String],
+        coerce: function (v) {
+          return +v
+        },
+        default: 50
+      }
+    }
+
+    data = {
+    }
+    events = {
+      'index-broadcast': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    watch = {
+      num (curVal, oldVal) {
+        console.log(`旧值：${oldVal}，新值：${curVal}`)
+      }
+    }
+
+    methods = {
+      plus () {
+        this.num = this.num + 1
+        console.log(this.$name + ' plus tap')
+
+        this.$emit('index-emit', 1, 2, 3)
+      },
+      minus () {
+        this.num = this.num - 1
+        console.log(this.$name + ' minus tap')
+      }
+    }
+  }
+</script>

@@ -1,0 +1,155 @@
+<style lang="less">
+  .search-bar {
+    padding: 40rpx 50rpx;
+    background-color: rgb(255, 130, 1)
+  }
+  .search-input {
+    display: block;
+    margin: 0 auto;
+    padding: 0 20rpx;
+    font-size: 14px;
+    line-height: 100%;
+    border-radius: 5px;
+    background-color: rgb(245, 245, 245);
+  }
+  .product-item {
+    box-sizing: border-box;
+    margin-bottom: 10rpx;
+    padding: 10rpx;
+    height: 200rpx;
+    font-size: 0;
+  }
+  .product-img {
+    display: inline-block;
+    width: 200rpx;
+    height: 200rpx;
+    background: #efefef;
+    vertical-align: bottom;
+  }
+  .product-text {
+    display: inline-block;
+    font-size: 14px;
+    height: 200rpx;
+    vertical-align: bottom;
+  }
+  .product-title {
+    display: block;
+    margin-left: 10rpx;
+  }
+  .product-price {
+    display: block;
+    margin-top: 20rpx;
+    color: red;
+    font-size: 16px;
+  }
+</style>
+<template>
+  <view>
+    <view class="search-bar">
+      <input class='search-input' placeholder="testsetest" />
+    </view>
+    <view>
+      <i-tabs current="{{ current_scroll }}" scroll bindchange="handleChangeScroll">
+        <i-tab key="tab1" title="上新"></i-tab>
+        <i-tab key="tab2" title="女装"></i-tab>
+        <i-tab key="tab3" title="鞋包"></i-tab>
+        <i-tab key="tab4" title="美妆"></i-tab>
+        <i-tab key="tab5" title="居家"></i-tab>
+        <i-tab key="tab6" title="美食"></i-tab>
+        <i-tab key="tab7" title="母婴"></i-tab>
+        <i-tab key="tab8" title="家电"></i-tab>
+        <i-tab key="tab9" title="数码"></i-tab>
+      </i-tabs>
+    </view>
+    <view>
+      <i-tabs current="{{ current }}" bindchange="handleChange">
+        <i-tab key="all" title="综合"></i-tab>
+        <i-tab key="price" title="价格"></i-tab>
+        <i-tab key="salary" title="销量"></i-tab>
+        <i-tab key="count" title="超优惠"></i-tab>
+      </i-tabs>
+    </view>
+    <view class="product-item">
+      <image class="product-img" />
+      <view class="product-text">
+        <text class="product-title">商品标题商品标题</text>
+        <text class="product-price">￥100</text>
+      </view>
+    </view>
+    <view class="product-item">
+      <image class="product-img" />
+      <view class="product-text">
+        <text class="product-title">商品标题商品标题</text>
+        <text class="product-price">￥100</text>
+      </view>
+    </view>
+    <view class="product-item">
+      <image class="product-img" />
+      <view class="product-text">
+        <text class="product-title">商品标题商品标题</text>
+        <text class="product-price">￥100</text>
+      </view>
+    </view>
+    <view class="product-item">
+      <image class="product-img" />
+      <view class="product-text">
+        <text class="product-title">商品标题商品标题</text>
+        <text class="product-price">￥100</text>
+      </view>
+    </view>
+    <view class="product-item">
+      <image class="product-img" />
+      <view class="product-text">
+        <text class="product-title">商品标题商品标题</text>
+        <text class="product-price">￥100</text>
+      </view>
+    </view>
+    <view class="product-item">
+      <image class="product-img" />
+      <view class="product-text">
+        <text class="product-title">商品标题商品标题</text>
+        <text class="product-price">￥100</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  // @connect({
+  //   num (state) {
+  //     return state.counter.num
+  //   },
+  //   asyncNum (state) {
+  //     return state.counter.asyncNum
+  //   },
+  //   sumNum (state) {
+  //     return state.counter.num + state.counter.asyncNum
+  //   }
+  // })
+
+  export default class Product extends wepy.page {
+    config = {
+      navigationBarTitleText: '首页',
+      usingComponents: {
+        'i-tabs': '../ui/tabs/index',
+        'i-tab': '../ui/tab/index',
+        'i-input': '../ui/input/index',
+      }
+    }
+
+    data = {
+      current_scroll: 'tab1',
+      current: 'all'
+    }
+
+    methods = {
+      handleChangeScroll ({ detail }) {
+        this.current_scroll = detail.key
+      },
+      handleChange ({ detail }) {
+        this.current = detail.key
+      }
+    }
+  }
+</script>
