@@ -110,24 +110,23 @@
         <text class="product-price">￥100</text>
       </view>
     </view>
+    <i-modal
+      title="授权提醒"
+      visible="{{ visible }}"
+      show-ok=false
+      show-cancel=false
+    >
+      <view>
+        <text>提供授权信息</text>
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfomation" lang="zh_CN">获取用户信息</button>
+      </view>
+    </i-modal>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import Slider from '../components/counter'
-
-  // @connect({
-  //   num (state) {
-  //     return state.counter.num
-  //   },
-  //   asyncNum (state) {
-  //     return state.counter.asyncNum
-  //   },
-  //   sumNum (state) {
-  //     return state.counter.num + state.counter.asyncNum
-  //   }
-  // })
+  import Slider from '../components/list'
 
   export default class Index extends wepy.page {
     config = {
@@ -140,7 +139,8 @@
         'i-grid-item': '../ui/grid-item/index',
         'i-grid-icon': '../ui/grid-icon/index',
         'i-grid-label': '../ui/grid-label/index',
-        'i-notice-bar': '../ui/notice-bar/index'
+        'i-notice-bar': '../ui/notice-bar/index',
+        'i-modal': '../ui/modal/index'
       }
     }
 
@@ -150,17 +150,52 @@
     }
 
     data = {
-      current_scroll: 'tab1'
+      current_scroll: 'tab1',
+      visible: false
+    }
+
+    async checkLoginStatus () {
+      const { loginData } = this.$parent.globalData
+      if (loginData) {
+        this.login()
+      } else {
+        this.visible = true
+      }
+    }
+
+    async login () {
+      const { code } = await wepy.login()
+      console.log(code)
+      // const params = {
+      //   code,
+      //   // ...this.$parent.globalData.loginData
+      // }
+      // const res = await wepy.request({
+      //   url: 'https://hb.dickxun.com/api/user/login',
+      //   method: 'POST',
+      //   data: params
+      // })
+      // console.log(res)
     }
 
     methods = {
       handleChangeScroll ({ detail }) {
         this.current_scroll = detail.key
+      },
+
+      getUserInfomation (e) {
+        this.$parent.globalData.userInfo = e.detail.userInfo
+        this.$parent.globalData.loginData = {
+          encrypted_data: e.detail.encryptedData,
+          iv: e.detail.iv,
+          signature: e.detail.signature
+        }
+        this.login()
       }
     }
 
     onLoad () {
-      this.$parent.getUserInfo()
+      this.checkLoginStatus()
     }
   }
 </script>

@@ -7,15 +7,26 @@
   }
 </style>
 <template>
-  <view class="list">
   <view>
-    <button @tap="add" size="mini">添加列表</button>
-  </view>
-    <block wx:for-items="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-      <view @tap="tap" class="mylist">
-        <text>{{item.id}}</text>: {{item.title}}
-      </view>
-    </block>
+    <swiper
+      autoplay=true
+      indicator-dots=true
+    >
+      <block>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+        <swiper-item>
+          <image src="" />
+        </swiper-item>
+      </block>
+    <swiper/>
   </view>
 </template>
 <script>
