@@ -8,8 +8,8 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"appid": "wx24f20e9100902faa",
-	"projectname": "myproject",
+	"appid": "wx2c4b4c799577fd97",
+	"projectname": "wph",
 	"miniprogramRoot": "dist/",
 	"condition": {}
 }

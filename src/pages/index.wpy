@@ -165,17 +165,16 @@
 
     async login () {
       const { code } = await wepy.login()
-      console.log(code)
-      // const params = {
-      //   code,
-      //   // ...this.$parent.globalData.loginData
-      // }
-      // const res = await wepy.request({
-      //   url: 'https://hb.dickxun.com/api/user/login',
-      //   method: 'POST',
-      //   data: params
-      // })
-      // console.log(res)
+      const params = {
+        code,
+        ...this.$parent.globalData.loginData
+      }
+      const res = await wepy.request({
+        url: 'https://hb.dickxun.com/api/user/login',
+        method: 'POST',
+        data: params
+      })
+      console.log(res)
     }
 
     methods = {
