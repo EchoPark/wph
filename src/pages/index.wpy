@@ -22,35 +22,40 @@
     border-radius: 5px;
     background-color: rgb(245, 245, 245);
   }
+  .product-container {
+    padding-top: 20rpx;
+    font-size: 0;
+    overflow: hidden;
+  }
   .product-item {
+    display: inline-block;
+    width: 50%;
     box-sizing: border-box;
     margin-bottom: 10rpx;
     padding: 10rpx;
-    height: 200rpx;
-    font-size: 0;
   }
   .product-img {
-    display: inline-block;
+    display: block;
+    margin: 0 auto;
     width: 200rpx;
     height: 200rpx;
     background: #efefef;
-    vertical-align: bottom;
   }
   .product-text {
-    display: inline-block;
+    display: block;
     font-size: 14px;
-    height: 200rpx;
-    vertical-align: bottom;
   }
   .product-title {
     display: block;
-    margin-left: 10rpx;
+    margin-top: 10rpx;
+    text-align: center;
   }
   .product-price {
     display: block;
-    margin-top: 20rpx;
+    margin: 10rpx auto 0;
     color: red;
     font-size: 16px;
+    text-align: center;
   }
 </style>
 <template>
@@ -71,7 +76,6 @@
         <i-tab key="tab9" title="数码"></i-tab>
       </i-tabs>
     </view>
-    <!-- <imgslider list.sync="{{sliderArr}}"></imgslider> -->
     <view class="slider">
       <swiper class="swiper" indicator-dots=true autoplay=true>
         <block wx:for="{{sliderArr}}">
@@ -108,26 +112,18 @@
       </i-grid>
     </view>
     <i-notice-bar loop=true icon="systemprompt">今日特卖，每天早晚9点上新</i-notice-bar>
-    <view class="product-item">
-      <image class="product-img" />
-      <view class="product-text">
-        <text class="product-title">商品标题商品标题</text>
-        <text class="product-price">￥100</text>
-      </view>
-    </view>
-    <view class="product-item">
-      <image class="product-img" />
-      <view class="product-text">
-        <text class="product-title">商品标题商品标题</text>
-        <text class="product-price">￥100</text>
-      </view>
-    </view>
-    <view class="product-item">
-      <image class="product-img" />
-      <view class="product-text">
-        <text class="product-title">商品标题商品标题</text>
-        <text class="product-price">￥100</text>
-      </view>
+    <view class="product-container">
+      <block wx:for="{{products}}">
+        <view class="product-item">
+          <navigator url="{{item.cps_url}}">
+            <image class="product-img" src="{{item.image_url}}" />
+            <view class="product-text">
+              <text class="product-title">{{item.title}}</text>
+              <text class="product-price">￥{{item.vip_price}}</text>
+            </view>
+          </navigator>
+        </view>
+      </block>
     </view>
     <i-modal
       title="授权提醒"
@@ -171,7 +167,8 @@
     data = {
       current_scroll: 'tab1',
       visible: false,
-      sliderArr: []
+      sliderArr: [],
+      products: []
     }
 
     async checkLoginStatus () {
@@ -204,16 +201,27 @@
           page_size: 10
         }
       })
-      console.log(res)
     }
 
     async getSlider () {
-      const res = await wepy.request({
+      const { data } = await wepy.request({
         url: 'https://hb.dickxun.com/api/app/index',
         method: 'POST'
       })
-      this.sliderArr = res.data.result
-      console.log(this.sliderArr)
+      this.sliderArr = data.result
+    }
+
+    async getProducts () {
+      const { data } = await wepy.request({
+        url: 'https://hb.dickxun.com/api/goods/list',
+        method: 'POST',
+        data: {
+          page: 0,
+          page_size: 4
+        }
+      })
+      this.products = data.result.list
+      console.log(this.products)
     }
 
     methods = {
@@ -236,6 +244,7 @@
       this.checkLoginStatus()
       this.getCateGory()
       this.getSlider()
+      this.getProducts()
     }
   }
 </script>
