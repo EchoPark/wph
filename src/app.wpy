@@ -64,6 +64,20 @@ export default class extends wepy.app {
     loginData: null
   }
 
+  // async login () {
+  //   const { code } = await wepy.login()
+  //     let params = { code }
+  //     if (this.globalData.loginData) {
+  //       params = { code, ...this.globalData.loginData }
+  //     }
+  //     const res = await wepy.request({
+  //       url: 'https://hb.dickxun.com/api/user/login',
+  //       method: 'POST',
+  //       data: params
+  //     })
+  //     console.log(res)
+  // }
+
   constructor () {
     super()
     this.use('requestfix')

@@ -1,4 +1,14 @@
 <style lang="less">
+  .slider {
+    height: 240px;
+  }
+  .swiper {
+    height: 100%;
+  }
+  .slider-image {
+    display: block;
+    margin: 0 auto;
+  }
   .search-bar {
     padding: 40rpx 50rpx;
     background-color: rgb(255, 130, 1)
@@ -61,7 +71,16 @@
         <i-tab key="tab9" title="数码"></i-tab>
       </i-tabs>
     </view>
-    <imgslider></imgslider>
+    <!-- <imgslider list.sync="{{sliderArr}}"></imgslider> -->
+    <view class="slider">
+      <swiper class="swiper" indicator-dots=true autoplay=true>
+        <block wx:for="{{sliderArr}}">
+          <swiper-item>
+            <navigator target="miniProgram" path="{{item.url}}"><image src="{{item.image_url}}" class="slider-image"/></navigator>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
     <view>
       <i-grid>
         <i-grid-item>
@@ -151,14 +170,13 @@
 
     data = {
       current_scroll: 'tab1',
-      visible: false
+      visible: false,
+      sliderArr: []
     }
 
     async checkLoginStatus () {
-      const { loginData } = this.$parent.globalData
-      if (loginData) {
-        this.login()
-      } else {
+      const data = await this.login()
+      if (!data) {
         this.visible = true
       }
     }
@@ -174,7 +192,28 @@
         method: 'POST',
         data: params
       })
+      return res
+    }
+
+    async getCateGory () {
+      const res = await wepy.request({
+        url: 'https://hb.dickxun.com/api/category/list',
+        method: 'POST',
+        data: {
+          page: 0,
+          page_size: 10
+        }
+      })
       console.log(res)
+    }
+
+    async getSlider () {
+      const res = await wepy.request({
+        url: 'https://hb.dickxun.com/api/app/index',
+        method: 'POST'
+      })
+      this.sliderArr = res.data.result
+      console.log(this.sliderArr)
     }
 
     methods = {
@@ -193,8 +232,10 @@
       }
     }
 
-    onLoad () {
+    async onLoad () {
       this.checkLoginStatus()
+      this.getCateGory()
+      this.getSlider()
     }
   }
 </script>
