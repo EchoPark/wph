@@ -80,7 +80,7 @@
       <swiper class="swiper" indicator-dots=true autoplay=true>
         <block wx:for="{{sliderArr}}">
           <swiper-item>
-            <navigator target="miniProgram" path="{{item.url}}"><image src="{{item.image_url}}" class="slider-image"/></navigator>
+            <navigator target="miniProgram" app-id="wxe9714e742209d35f" path="{{item.url}}"><image src="{{item.image_url}}" class="slider-image"/></navigator>
           </swiper-item>
         </block>
       </swiper>
